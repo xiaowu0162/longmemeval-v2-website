@@ -4,7 +4,7 @@ Static prototype for the LongMemEval-V2 project website.
 
 Target deployment:
 
-`https://xiaowu0162.github.io/longmemeval-v2-website/`
+`https://xiaowu0162.github.io/longmemeval-v2/`
 
 ## Local Preview
 

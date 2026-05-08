@@ -33,6 +33,7 @@
       <li><a href="#benchmark">Benchmark</a></li>
       <li><a href="#evaluation">Evaluation</a></li>
       <li><a href="#agentrunbook">AgentRunbook</a></li>
+      <li><a href="#pilot">Pilot Studies</a></li>
       <li><a href="#results">Results</a></li>
       <li><a href="#data-viewer">Data Viewer</a></li>
       <li><a href="#leaderboard">Leaderboard</a></li>
@@ -47,17 +48,14 @@
         <h1 class="title publication-title">
           LongMemEval-V2: Evaluating Long-Term Agent Memory Toward Experienced Colleagues
         </h1>
-        <p class="subtitle project-subtitle">
-          A benchmark for memory systems that turn accumulated web-agent trajectories into reusable environment experience.
-        </p>
         <div class="publication-authors">
-          <span class="author-block">Di Wu</span>,
-          <span class="author-block">Zixiang Ji</span>,
-          <span class="author-block">Asmi Kawatkar</span>,
-          <span class="author-block">Bryan Kwan</span>,
-          <span class="author-block">Jia-Chen Gu</span>,
-          <span class="author-block">Nanyun Peng</span>,
-          <span class="author-block">Kai-Wei Chang</span>
+          <span class="author-block"><a href="https://xiaowu0162.github.io/">Di Wu</a></span>,
+          <span class="author-block"><a href="https://www.linkedin.com/pub/dir/Zixiang/Ji">Zixiang Ji</a></span>,
+          <span class="author-block"><a href="https://www.linkedin.com/in/asmi-kawatkar">Asmi Kawatkar</a></span>,
+          <span class="author-block"><a href="https://www.linkedin.com/in/kwan-bryan">Bryan Kwan</a></span>,
+          <span class="author-block"><a href="https://jasonforjoy.github.io/index.html">Jia-Chen Gu</a></span>,
+          <span class="author-block"><a href="https://vnpeng.net/">Nanyun Peng</a></span>,
+          <span class="author-block"><a href="https://kwchang.net/">Kai-Wei Chang</a></span>
         </div>
         <div class="publication-affiliation">UCLA</div>
 
@@ -123,98 +121,264 @@
     <section class="section section-band" id="benchmark">
       <div class="container is-max-widescreen">
         <h2 class="title section-title">Benchmark</h2>
-        <div class="ability-grid">
-          <article class="ability-card">
-            <span class="ability-kicker">Static</span>
-            <h3>State Recall</h3>
-            <p>Remember landmarks, page layouts, module affordances, and subtle differences across states.</p>
-          </article>
-          <article class="ability-card">
-            <span class="ability-kicker">Dynamic</span>
-            <h3>State Tracking</h3>
-            <p>Understand how the environment changes after states, actions, and repeated interactions.</p>
-          </article>
-          <article class="ability-card">
-            <span class="ability-kicker">Workflow</span>
-            <h3>Procedural Knowledge</h3>
-            <p>Recall steps needed for recurring tasks in customized web and enterprise environments.</p>
-          </article>
-          <article class="ability-card">
-            <span class="ability-kicker">Gotchas</span>
-            <h3>Failure Modes</h3>
-            <p>Recognize environment-specific traps that repeatedly cause inexperienced agents to fail.</p>
-          </article>
-          <article class="ability-card">
-            <span class="ability-kicker">Premise</span>
-            <h3>Awareness</h3>
-            <p>Detect assumptions that may be valid elsewhere but wrong in the current environment.</p>
-          </article>
+        <div class="experience-block">
+          <h3>What defines an experienced colleague?</h3>
+          <div class="experience-line"><strong>Static state recall</strong><span>remembers important landmarks, page layouts, module affordances, and subtle state differences.</span></div>
+          <div class="experience-line"><strong>Dynamic state tracking</strong><span>understands how states and actions change the environment over time.</span></div>
+          <div class="experience-line"><strong>Workflow knowledge</strong><span>knows the steps needed to complete recurring tasks in customized environments.</span></div>
+          <div class="experience-line"><strong>Environment gotchas</strong><span>recognizes recurring local failure modes and avoids environment-specific traps.</span></div>
+          <div class="experience-line"><strong>Premise awareness</strong><span>detects assumptions that are valid elsewhere but wrong in the current deployment.</span></div>
         </div>
 
-        <div class="columns figure-columns">
-          <div class="column">
-            <figure class="paper-figure">
-              <img src="./assets/figures/question_stats.png" alt="Question distribution statistics">
-              <figcaption>Questions span domains, types, and answer formats.</figcaption>
-            </figure>
-          </div>
-          <div class="column">
-            <figure class="paper-figure">
-              <img src="./assets/figures/haystack_stats.png" alt="Haystack trajectory and token statistics">
-              <figcaption>History haystacks are large, while answer-bearing trajectories remain sparse.</figcaption>
-            </figure>
+        <div class="construction-block">
+          <h3>Benchmark construction</h3>
+          <div class="construction-steps">
+            <div><strong>1. Collect trajectories</strong><span>Gather task-solving traces from WebArena, WorkArena, and WorkArena++ environments.</span></div>
+            <div><strong>2. Annotate questions</strong><span>Manually curate questions that target experienced-colleague memory abilities.</span></div>
+            <div><strong>3. Label evidence</strong><span>Identify answer-bearing trajectories and verify evidence coverage.</span></div>
+            <div><strong>4. Build haystacks</strong><span>Assemble sparse-answer histories for LME-V2-Small and LME-V2-Medium.</span></div>
           </div>
         </div>
 
-        <div class="table-wrap">
+        <figure class="paper-figure distribution-figure">
+          <img src="./assets/figures/question_stats.png" alt="Question distribution statistics">
+          <figcaption>Questions span domains, types, and answer formats.</figcaption>
+        </figure>
+
+        <figure class="paper-figure distribution-figure">
+          <img src="./assets/figures/haystack_stats.png" alt="Haystack trajectory and token statistics">
+          <figcaption>History haystacks are large, while answer-bearing trajectories remain sparse.</figcaption>
+        </figure>
+
+        <div class="table-wrap comparison-wrap">
           <table class="table is-fullwidth benchmark-table">
             <thead>
               <tr>
+                <th>Group</th>
                 <th>Benchmark</th>
                 <th>Domain</th>
                 <th>Sessions</th>
                 <th>Tokens</th>
+                <th>Context MM</th>
                 <th>Questions</th>
-                <th>Multimodal</th>
-                <th>Abilities</th>
+                <th>Question MM</th>
+                <th>Static</th>
+                <th>Dynamic</th>
+                <th>Workflow</th>
+                <th>Gotchas</th>
+                <th>Premise</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>LongMemEval-V1</td>
+                <td>General long context</td>
+                <td><a href="https://aclanthology.org/2025.acl-long.183/">LongBench V2</a></td>
+                <td>Mixed</td>
+                <td>N/A</td>
+                <td>260K</td>
+                <td>No</td>
+                <td>503</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>General long context</td>
+                <td><a href="https://doi.org/10.48550/arXiv.2507.05257">MemoryAgentBench</a></td>
+                <td>Mixed</td>
+                <td>N/A</td>
+                <td>285K</td>
+                <td>No</td>
+                <td>2,071</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>General long context</td>
+                <td><a href="https://doi.org/10.48550/arXiv.2602.03587">CL-Bench</a></td>
+                <td>Mixed</td>
+                <td>N/A</td>
+                <td>10K</td>
+                <td>No</td>
+                <td>1,899</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Conversational long context</td>
+                <td><a href="https://doi.org/10.18653/v1/2024.acl-long.747">LoCoMo</a></td>
+                <td>User-user chat</td>
+                <td>28</td>
+                <td>~16K</td>
+                <td>Yes</td>
+                <td>7,512</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Conversational long context</td>
+                <td><a href="https://openreview.net/forum?id=pZiyCaVuti">LongMemEval-V1</a></td>
                 <td>User-assistant chat</td>
                 <td>48-475</td>
                 <td>115K-1.5M</td>
+                <td>No</td>
                 <td>500</td>
                 <td>No</td>
-                <td>Static, dynamic, premise</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+                <td>Yes</td>
               </tr>
               <tr>
-                <td>BEAM</td>
+                <td>Conversational long context</td>
+                <td><a href="https://doi.org/10.48550/arXiv.2504.14225">PersonaMem</a></td>
+                <td>User-assistant chat</td>
+                <td>5-60</td>
+                <td>26K-951K</td>
+                <td>No</td>
+                <td>5,990</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Conversational long context</td>
+                <td><a href="https://doi.org/10.48550/arXiv.2512.06688">PersonaMem-v2</a></td>
+                <td>User-assistant chat</td>
+                <td>10-20</td>
+                <td>33K-124K</td>
+                <td>Yes</td>
+                <td>5,000</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Conversational long context</td>
+                <td><a href="https://doi.org/10.48550/arXiv.2510.27246">BEAM</a></td>
                 <td>User-assistant chat</td>
                 <td>4.5-100</td>
                 <td>124K-10M</td>
+                <td>No</td>
                 <td>2,000</td>
                 <td>No</td>
-                <td>Static, dynamic, premise</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+                <td>Yes</td>
               </tr>
               <tr>
-                <td>MemoryArena</td>
+                <td>Agentic long context</td>
+                <td><a href="https://doi.org/10.48550/arXiv.2602.16313">MemoryArena</a></td>
                 <td>Agent mixed</td>
                 <td>7</td>
                 <td>40K+</td>
+                <td>No</td>
                 <td>766</td>
                 <td>No</td>
-                <td>Static, workflows, gotchas</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Agentic long context</td>
+                <td><a href="https://doi.org/10.48550/arXiv.2601.20730">AgentLongBench</a></td>
+                <td>Game agent</td>
+                <td>1</td>
+                <td>31K-4M</td>
+                <td>No</td>
+                <td>6,400</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Agentic long context</td>
+                <td><a href="https://doi.org/10.48550/arXiv.2601.16690">EMemBench</a></td>
+                <td>Game agent</td>
+                <td>1</td>
+                <td>2K-infinity</td>
+                <td>Yes</td>
+                <td>1,280+</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Agentic long context</td>
+                <td><a href="https://doi.org/10.48550/arXiv.2604.04901">FileGramBench</a></td>
+                <td>File-system agent</td>
+                <td>12</td>
+                <td>11K</td>
+                <td>Yes</td>
+                <td>4,333</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Agentic long context</td>
+                <td><a href="https://doi.org/10.48550/arXiv.2602.22769">AMA-Bench</a></td>
+                <td>Agent mixed</td>
+                <td>1</td>
+                <td>57K</td>
+                <td>No</td>
+                <td>2,496</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
               </tr>
               <tr class="highlight-row">
+                <td>Agentic long context</td>
                 <td>LongMemEval-V2</td>
                 <td>Web agent</td>
                 <td>100-498</td>
                 <td>25M-115M</td>
+                <td>Yes</td>
                 <td>451</td>
                 <td>Yes</td>
-                <td>Static, dynamic, workflows, gotchas, premise</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
               </tr>
             </tbody>
           </table>
@@ -225,23 +389,28 @@
     <section class="section" id="evaluation">
       <div class="container is-max-desktop">
         <h2 class="title section-title">Evaluation</h2>
-        <div class="columns is-variable is-6">
-          <div class="column">
-            <div class="formula-panel">
-              <div class="formula-line">M<sub>i,j</sub> = Insert<sub>M<sub>i,j-1</sub></sub>(h<sub>i,j</sub>)</div>
-              <div class="formula-line">c<sub>i</sub> = Query<sub>M<sub>i,m</sub></sub>(q<sub>i</sub>)</div>
-              <div class="formula-line">y&#770;<sub>i</sub> = Reader(q<sub>i</sub>, Trunc(c<sub>i</sub>))</div>
-            </div>
+        <div class="evaluation-flow" aria-label="Context gathering evaluation workflow">
+          <div class="flow-node"><span>1</span><strong>Insert</strong><em>stream trajectories</em></div>
+          <div class="flow-arrow" aria-hidden="true"></div>
+          <div class="flow-node"><span>2</span><strong>Memory</strong><em>store experience</em></div>
+          <div class="flow-arrow" aria-hidden="true"></div>
+          <div class="flow-node"><span>3</span><strong>Query</strong><em>gather evidence</em></div>
+          <div class="flow-arrow" aria-hidden="true"></div>
+          <div class="flow-node"><span>4</span><strong>Reader</strong><em>answer from context</em></div>
+        </div>
+        <div class="content project-copy evaluation-copy">
+          <p>
+            LME-V2 uses a context gathering formulation. A memory system sequentially inserts trajectories, then returns a bounded multimodal
+            memory context for a question. A fixed reader answers from that context.
+          </p>
+          <div class="formula-strip">
+            <code>Insert(h)</code>
+            <code>Query(q) &rarr; context</code>
+            <code>Reader(q, context) &rarr; answer</code>
           </div>
-          <div class="column content project-copy">
-            <p>
-              LME-V2 uses a context gathering formulation. A memory system sequentially inserts trajectories, then returns a bounded multimodal
-              memory context for a question. A fixed reader answers from that context.
-            </p>
-            <p>
-              The evaluation reports answer accuracy and query latency, so memory modules are measured by both evidence quality and operational cost.
-            </p>
-          </div>
+          <p>
+            The evaluation reports answer accuracy and query latency, so memory modules are measured by both evidence quality and operational cost.
+          </p>
         </div>
       </div>
     </section>
@@ -276,13 +445,28 @@
             </ul>
           </article>
         </div>
+      </div>
+    </section>
 
-        <div class="screenshot-strip">
-          <img src="./assets/figures/ar_c_static_submission_form.png" alt="ServiceNow submission form screenshot">
-          <img src="./assets/figures/ar_c_dynamic_price_filter.png" alt="Dynamic price filter screenshot">
-          <img src="./assets/figures/ar_r_event_reply_banner.png" alt="Event reply banner screenshot">
-          <img src="./assets/figures/ar_r_note_myorders_page4.png" alt="My orders page screenshot">
+    <section class="section" id="pilot">
+      <div class="container is-max-widescreen">
+        <h2 class="title section-title">Pilot Studies</h2>
+        <div class="pilot-layout">
+          <figure class="paper-figure pilot-figure">
+            <img src="./assets/figures/pilot_no_context.png" alt="No-context pilot study accuracy by model">
+            <figcaption>Frontier LLMs perform poorly without trajectory evidence; the best no-context result reaches 14.1% overall accuracy.</figcaption>
+          </figure>
+          <div class="pilot-cards">
+            <div class="pilot-card"><strong>14.1%</strong><span>best no-context accuracy</span></div>
+            <div class="pilot-card"><strong>65.3%</strong><span>GPT-5.4-mini with oracle trajectories</span></div>
+            <div class="pilot-card"><strong>86.3%</strong><span>oracle slices plus notes</span></div>
+            <div class="pilot-card"><strong>89.7%</strong><span>Codex with oracle trajectory files</span></div>
+          </div>
         </div>
+        <p class="pilot-note">
+          The pilot studies show that LME-V2 questions require environment-specific experience, and that reading long multimodal trajectories is itself
+          difficult even when answer-bearing trajectories are known. This motivates the AgentRunbook designs evaluated below.
+        </p>
       </div>
     </section>
 
