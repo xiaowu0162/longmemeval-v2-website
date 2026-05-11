@@ -609,7 +609,7 @@
       <div class="container is-max-widescreen">
         <h2 class="title section-title">Leaderboard</h2>
         <div class="section-highlight">
-          Leaderboard entries will summarize submitted memory systems across accuracy, latency, and benchmark tier.
+          Leaderboard entries will be scored by LAFS Gain: the improvement over the fixed baseline + AgentRunbook reference frontier.
         </div>
         <div class="todo-panel">
           <div>
@@ -617,24 +617,30 @@
             <h3>Leaderboard shell</h3>
           </div>
           <p>
-            The public leaderboard will use a sortable table with filters for method family, model, memory setting, tier, accuracy, and query latency.
-            Entries and submission instructions will be added after the leaderboard schema is finalized.
+            The public leaderboard will sort by LAFS Gain by default, with optional sorting by accuracy and query latency.
+            Entries and submission instructions will be added after the submission schema is finalized.
           </p>
+        </div>
+        <div class="leaderboard-controls" aria-label="Leaderboard sorting controls">
+          <span>Sort by</span>
+          <button class="leaderboard-sort active" type="button" data-sort="lafsGain" aria-pressed="true">LAFS Gain</button>
+          <button class="leaderboard-sort" type="button" data-sort="accuracy" aria-pressed="false">Accuracy</button>
+          <button class="leaderboard-sort" type="button" data-sort="latency" aria-pressed="false">Latency</button>
         </div>
         <div class="table-wrap">
           <table class="table is-fullwidth leaderboard-table">
             <thead>
               <tr>
-                <th>Rank</th>
                 <th>System</th>
+                <th>Method Family</th>
+                <th>Model</th>
                 <th>Memory Type</th>
-                <th>Small Acc.</th>
-                <th>Medium Acc.</th>
+                <th>Accuracy</th>
                 <th>Avg. Latency</th>
-                <th>Status</th>
+                <th>LAFS Gain</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="leaderboard-body">
               <tr>
                 <td colspan="7">Leaderboard entries coming soon.</td>
               </tr>

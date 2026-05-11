@@ -318,6 +318,39 @@ a {
   vertical-align: middle;
 }
 
+.leaderboard-controls {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin: 1.1rem 0 -0.5rem;
+}
+
+.leaderboard-controls span {
+  color: var(--lme-muted);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.leaderboard-sort {
+  background: #fff;
+  border: 1px solid var(--lme-line);
+  border-radius: 999px;
+  color: var(--lme-navy);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 0.36rem 0.72rem;
+}
+
+.leaderboard-sort.active,
+.leaderboard-sort:hover {
+  background: var(--lme-navy);
+  border-color: var(--lme-navy);
+  color: #fff;
+}
+
 .comparison-wrap .table th,
 .comparison-wrap .table td {
   font-size: 0.78rem;

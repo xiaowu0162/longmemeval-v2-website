@@ -3,7 +3,10 @@ const state = {
   questionIndex: 0,
   trajectoryIndex: 0,
   trajectoryStateIndex: 0,
+  leaderboardSort: "lafsGain",
 };
+
+const leaderboardEntries = [];
 
 function setupToc() {
   const burger = document.getElementById("toc-burger");
@@ -46,6 +49,16 @@ function normalizeIndex(index, length) {
     return 0;
   }
   return ((index % length) + length) % length;
+}
+
+function formatMetric(value, suffix = "") {
+  if (value === null || value === undefined || value === "") {
+    return "-";
+  }
+  return `${Number(value).toLocaleString(undefined, {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0,
+  })}${suffix}`;
 }
 
 function setupViewerSummary(dataset) {
@@ -245,8 +258,61 @@ async function setupDataViewer() {
   renderTrajectory();
 }
 
+function renderLeaderboard() {
+  const body = document.getElementById("leaderboard-body");
+  if (!body) {
+    return;
+  }
+
+  if (leaderboardEntries.length === 0) {
+    body.innerHTML = `<tr><td colspan="7">Leaderboard entries coming soon.</td></tr>`;
+    return;
+  }
+
+  const sortKey = state.leaderboardSort;
+  const sorted = [...leaderboardEntries].sort((left, right) => {
+    if (sortKey === "latency") {
+      return (left.latency ?? Infinity) - (right.latency ?? Infinity);
+    }
+    return (right[sortKey] ?? -Infinity) - (left[sortKey] ?? -Infinity);
+  });
+
+  body.innerHTML = sorted
+    .map(
+      (entry) => `
+        <tr>
+          <td>${escapeHtml(entry.system)}</td>
+          <td>${escapeHtml(entry.family)}</td>
+          <td>${escapeHtml(entry.model)}</td>
+          <td>${escapeHtml(entry.memoryType)}</td>
+          <td>${escapeHtml(formatMetric(entry.accuracy, "%"))}</td>
+          <td>${escapeHtml(formatMetric(entry.latency, "s"))}</td>
+          <td>${escapeHtml(formatMetric(entry.lafsGain))}</td>
+        </tr>
+      `,
+    )
+    .join("");
+}
+
+function setupLeaderboard() {
+  const buttons = document.querySelectorAll(".leaderboard-sort");
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      state.leaderboardSort = button.dataset.sort;
+      buttons.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle("active", active);
+        item.setAttribute("aria-pressed", String(active));
+      });
+      renderLeaderboard();
+    });
+  });
+  renderLeaderboard();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setupToc();
+  setupLeaderboard();
   setupDataViewer().catch((error) => {
     const summary = document.getElementById("viewer-summary");
     summary.innerHTML = `<div class="viewer-stat"><strong>Data unavailable</strong><span>${escapeHtml(error.message)}</span></div>`;
