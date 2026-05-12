@@ -226,6 +226,15 @@ function compactText(value, limit = 360) {
   return `${text.slice(0, limit).trim()}...`;
 }
 
+function formatTrajectoryAction(value) {
+  const raw = String(value ?? "").trim();
+  if (!raw) {
+    return "";
+  }
+  const actionMatch = raw.match(/<action>\s*([\s\S]*?)(?:<\/action>|$)/i);
+  return actionMatch ? actionMatch[1].trim() : raw;
+}
+
 function formatTrajectoryUrl(value) {
   const raw = String(value ?? "").trim();
   if (!raw) {
@@ -390,6 +399,7 @@ function renderTrajectory() {
   state.trajectoryStateIndex = normalizeIndex(state.trajectoryStateIndex, states.length);
   const item = states[state.trajectoryStateIndex];
   const displayUrl = item ? formatTrajectoryUrl(item.url) : "";
+  const displayAction = item ? formatTrajectoryAction(item.action) : "";
   const stateCount = trajectory.state_count || states.length;
   const domainLabel = trajectoryDomainLabel(trajectory);
 
@@ -409,7 +419,7 @@ function renderTrajectory() {
           </div>
           <div class="state-field">
             <strong>Action</strong>
-            <code>${escapeHtml(item.action || "Start state")}</code>
+            <code>${escapeHtml(displayAction || "Start state")}</code>
           </div>
           ${
             item.action_annotation
