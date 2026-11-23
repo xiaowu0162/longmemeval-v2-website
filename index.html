@@ -617,7 +617,61 @@
         <!-- <div class="section-highlight">
           Leaderboard entries measure how much a memory system improves the released baseline + AgentRunbook accuracy-latency frontier.
         </div> -->
-        <div class="leaderboard-intro">
+        <p class="lb-lead">
+          LAFS Gain ranks memory systems by how much they push the accuracy&ndash;latency frontier beyond the released baselines and AgentRunbook.
+          The maintainers validate every submitted package before it appears here.
+        </p>
+        <div class="lb" id="leaderboard-app">
+          <div class="lb-toolbar">
+            <div class="lb-tier-toggle" id="lb-tier-toggle" role="tablist" aria-label="Benchmark tier"></div>
+            <div class="lb-actions">
+              <a class="lb-action is-primary" href="https://forms.gle/rxUpiuRKDERqpqSi9" target="_blank" rel="noopener">Submit a system</a>
+              <a class="lb-action" href="https://github.com/xiaowu0162/LongMemEval-V2/tree/main/leaderboard" target="_blank" rel="noopener">Submission guide</a>
+            </div>
+          </div>
+
+          <figure class="lb-card lb-chart-card">
+            <div class="lb-card-head">
+              <h3>Accuracy vs. memory-query latency</h3>
+              <p>Each colored line joins one submission&rsquo;s operating points, and the gray step is the reference frontier. Hover or select a submission to shade the accuracy it adds.</p>
+            </div>
+            <div class="lb-legend" id="lb-legend"></div>
+            <div class="lb-chart-wrap">
+              <div class="lb-chart" id="lb-chart"></div>
+              <div class="lb-tooltip" id="lb-tooltip" role="status" hidden></div>
+            </div>
+            <figcaption class="lb-chart-note">
+              <span id="lb-focus-caption"></span>
+              <span id="lb-omitted-note"></span>
+            </figcaption>
+          </figure>
+
+          <div class="table-wrap lb-table-wrap">
+            <table class="table is-fullwidth lb-table">
+              <thead>
+                <tr>
+                  <th class="lb-rank" rowspan="2" scope="col" aria-label="Rank">#</th>
+                  <th class="lb-system" rowspan="2" scope="col">System</th>
+                  <th class="lb-num" rowspan="2" scope="col"><button class="lb-sort" type="button" data-sort="lafsGain">LAFS Gain <span aria-hidden="true"></span></button></th>
+                  <th class="lb-num" rowspan="2" scope="col"><button class="lb-sort" type="button" data-sort="accuracy">Accuracy <span aria-hidden="true"></span></button></th>
+                  <th class="lb-num" rowspan="2" scope="col"><button class="lb-sort" type="button" data-sort="latency">Latency <span aria-hidden="true"></span></button></th>
+                  <th class="lb-colgroup" colspan="4" scope="colgroup">Accuracy by question type</th>
+                </tr>
+                <tr>
+                  <th class="lb-num" scope="col"><button class="lb-sort" type="button" data-sort="static">Static <span aria-hidden="true"></span></button></th>
+                  <th class="lb-num" scope="col"><button class="lb-sort" type="button" data-sort="dynamic">Dynamic <span aria-hidden="true"></span></button></th>
+                  <th class="lb-num" scope="col"><button class="lb-sort" type="button" data-sort="procedure">Procedure <span aria-hidden="true"></span></button></th>
+                  <th class="lb-num" scope="col"><button class="lb-sort" type="button" data-sort="gotchas">Gotchas <span aria-hidden="true"></span></button></th>
+                </tr>
+              </thead>
+              <tbody id="lb-body">
+                <tr><td colspan="9">Loading leaderboard&hellip;</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="leaderboard-intro lb-explainer">
           <div class="leaderboard-goal">
             <h3>Goal: accurate and efficient memory</h3>
             <p>
@@ -648,59 +702,6 @@
             <p>
               A score of 0 means the method does not beat the released reference frontier at any latency budget.
             </p>
-          </div>
-        </div>
-        <div class="leaderboard-tiers">
-          <div class="leaderboard-tier" role="group" aria-labelledby="leaderboard-small-title">
-            <h3 id="leaderboard-small-title">LME-V2-Small</h3>
-            <div class="table-wrap">
-              <table class="table is-fullwidth leaderboard-table">
-                <thead>
-                  <tr>
-                    <th>System</th>
-                    <th>Method Family</th>
-                    <th><button class="leaderboard-sort active" type="button" data-tier="small" data-sort="lafsGain" data-direction="desc" aria-pressed="true">LAFS Gain <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="small" data-sort="latency" aria-pressed="false">Query Latency <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="small" data-sort="accuracy" aria-pressed="false">Accuracy <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="small" data-sort="static" aria-pressed="false">Static <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="small" data-sort="dynamic" aria-pressed="false">Dynamic <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="small" data-sort="procedure" aria-pressed="false">Procedure <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="small" data-sort="gotchas" aria-pressed="false">Gotchas <span aria-hidden="true"></span></button></th>
-                  </tr>
-                </thead>
-                <tbody id="leaderboard-small-body">
-                  <tr>
-                    <td colspan="9">Leaderboard entries coming soon.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="leaderboard-tier" role="group" aria-labelledby="leaderboard-medium-title">
-            <h3 id="leaderboard-medium-title">LME-V2-Medium</h3>
-            <div class="table-wrap">
-              <table class="table is-fullwidth leaderboard-table">
-                <thead>
-                  <tr>
-                    <th>System</th>
-                    <th>Method Family</th>
-                    <th><button class="leaderboard-sort active" type="button" data-tier="medium" data-sort="lafsGain" data-direction="desc" aria-pressed="true">LAFS Gain <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="medium" data-sort="latency" aria-pressed="false">Query Latency <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="medium" data-sort="accuracy" aria-pressed="false">Accuracy <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="medium" data-sort="static" aria-pressed="false">Static <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="medium" data-sort="dynamic" aria-pressed="false">Dynamic <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="medium" data-sort="procedure" aria-pressed="false">Procedure <span aria-hidden="true"></span></button></th>
-                    <th><button class="leaderboard-sort" type="button" data-tier="medium" data-sort="gotchas" aria-pressed="false">Gotchas <span aria-hidden="true"></span></button></th>
-                  </tr>
-                </thead>
-                <tbody id="leaderboard-medium-body">
-                  <tr>
-                    <td colspan="9">Leaderboard entries coming soon.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
       </div>
@@ -744,6 +745,7 @@
       </div>
     </section>
   </main>
+  <script src="./static/js/leaderboard.js"></script>
   <script src="./static/js/index.js"></script>
 </body>
 
